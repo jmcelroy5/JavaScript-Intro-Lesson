@@ -85,50 +85,69 @@
     <span id="awesome-box" class="hidden">AWESOME</span>
 
     <script type="text/javascript">
-    var helloWorld = document.getElementById("get-text");
-    var textToReplace = document.getElementById("text-box-replace");
+    
 
-    helloWorld.addEventListener('click',function(e){
+    function clickHelloWorld(e){
         e.preventDefault();
-        textToReplace.innerHTML = "WORLD!";
-    });
+        document.getElementById("text-box-replace").innerHTML = "WORLD!";
+    }
 
-    var newColor = document.getElementById("get-color");
-    var textToChange = document.getElementById('text-box-color');
-
-    newColor.addEventListener('click', function(e)
-    {
+    function clickColor(e){
         e.preventDefault();
-        textToChange.style.backgroundColor = "red"
-        textToChange.innerHTML = "I am the color red!"
-    });
+        document.getElementById('text-box-color').style.backgroundColor = "red"
+        document.getElementById('text-box-color').innerHTML = "I am the color red!"
+    }
 
-    var melonBox = document.getElementById("melon-box");
-    var melonLink = document.getElementById("get-melon");
-
-
-    melonLink.addEventListener('click', function(e){
+    function clickMelon(e){
         e.preventDefault();
+        var melonBox = document.getElementById("melon-box");
         melonBox.innerHTML = '<img src = "https://www.organicfacts.net/wp-content/uploads/2013/05/watermelon2.jpg" /><br>'
         var newMelon = document.createTextNode("Hope you like watermelons!")
         melonBox.appendChild(newMelon)
-    })
+    }
+
+    function clickAwesome(e){
+        e.preventDefault();
+        toggleAwesome();
+        animateAwesome("right"); 
+    }
+
+    function toggleAwesome(){
+        var awesomeBox = document.getElementById("awesome-box");
+        awesomeBox.classList.toggle("hidden");
+        setTimeout(toggleAwesome,250);
+    }
+
+    function animateAwesome(direction){
+        var awesomeBox = document.getElementById("awesome-box");
+        var left = parseInt(getComputedStyle(awesomeBox).left, 10);
+
+        if (direction === "right" && left < 600){
+            awesomeBox.style.left = left + 4 + "px";
+        }
+        else if (left <= 0){
+            direction = "right";
+        }
+        else {
+            direction = "left";
+            awesomeBox.style.left = left - 4 + "px";
+        }
+
+        setTimeout(function(){animateAwesome(direction)},50);
+    }
+
+    var helloWorld = document.getElementById("get-text");
+    helloWorld.addEventListener('click',clickHelloWorld);
+
+    var newColor = document.getElementById("get-color");
+    newColor.addEventListener('click', clickColor);
+
+    var melonLink = document.getElementById("get-melon");
+    melonLink.addEventListener('click', clickMelon)
     
     var awesomeLink = document.getElementById("be-awesome");
-    var awesomeBox = document.getElementById("awesome-box");
-    awesomeLink.addEventListener('click', function(e){
-        e.preventDefault();
-        setInterval(function(e){
-            awesomeBox.classList.toggle("hidden");
-        },500);
+    awesomeLink.addEventListener('click', clickAwesome)
 
-        for (i=0;i<500;i++){
-            awesomeBox.style.left = i;
-        };
-    });
-
-
-    
     </script>
 
 </body>
